@@ -101,21 +101,28 @@ def getSmallestFormula(formulas):
     return smallestFormula
 
 def main():
-    numberOfFormulas = int(input())
-    for line in range(numberOfFormulas):
-        formula = input()
-        print("Problema #{}".format(line + 1))
+    responses = []
+    with open('Entrada2.in') as inputFile:
+        numberOfFormulas = int(inputFile.readline())
+        formulas = inputFile.readlines()
+        i = 1
 
-        if not isFNC(formula):
-            print("Não está na FNC.")
-        elif not isOnlyHorn(formula):
-            print("Nem todas as cláusulas são de Horn.")
-        elif isSatisfiable(formula):
-            print("Sim, é satisfatível.")
-        else:
-            print("Não, não é satisfatível.")
+        for formula in formulas:
+            responses.append("Problema #{}\n".format(i))
 
-        print()
+            if not isFNC(formula):
+                responses.append("Não está na FNC.\n")
+            elif not isOnlyHorn(formula):
+                responses.append("Nem todas as cláusulas são de Horn.\n")
+            elif isSatisfiable(formula):
+                responses.append("Sim, é satisfatível.\n")
+            else:
+                responses.append("Não, não é satisfatível.\n")
+            responses.append("\n")
+            i = i + 1
+
+    with open('saida.out', 'w') as outputFile:
+        outputFile.writelines(responses)
 
 if __name__ == "__main__":
     main()
